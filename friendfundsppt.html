@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendFunds - Complete Presentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Fix for DFD slides specifically */
+#slide7 .diagram h4,
+#slide8 .diagram h4,
+#slide9 .diagram h4,
+#slide10 .diagram h4 {
+    color: var(--accent) !important;
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+}
+
+#slide7 .diagram p,
+#slide8 .diagram p,
+#slide9 .diagram p,
+#slide10 .diagram p,
+#slide7 .diagram li,
+#slide8 .diagram li,
+#slide9 .diagram li,
+#slide10 .diagram li {
+    color: var(--light) !important;
+    font-size: 1.2rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0.8rem !important;
+}
+
+#slide7 .diagram strong,
+#slide8 .diagram strong,
+#slide9 .diagram strong,
+#slide10 .diagram strong {
+    color: var(--accent) !important;
+    font-weight: 600 !important;
+}
+
+/* Make DFD content more readable */
+.diagram-container {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-left: 4px solid var(--accent) !important;
+}
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #f39c12;
+            --dark: #17222b8f;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), #1a2530);
+            color: white;
+            line-height: 1.6;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateX(100%);
+            text-align: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+        
+        .slide.prev {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        
+        .slide-content {
+            max-width: 900px;
+            width: 90%;
+            background: rgba(0, 0, 0, 30%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 30%);
+        }
+        
+        .slide-title {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .slide-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+        
+        .slide-body {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .slide-list {
+            text-align: left;
+            margin-left: 2rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .slide-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .icon-large {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 30%);
+            z-index: 100;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 1.2rem;
+            z-index: 100;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .team-member {
+            background: rgba(0, 0, 0, 30%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            background: rgba(0, 0, 0, 30%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .spec-category {
+            background: rgba(0, 0, 0, 30%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .spec-category:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 30%);
+        }
+        
+        .spec-category h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .spec-category ul {
+            margin-left: 1.5rem;
+        }
+        
+        .spec-category li {
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .diagram-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .diagram-container:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 30%);
+        }
+        
+        .diagram {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        /* Screenshot slides specific styles */
+        .screenshot-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .screenshot-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 1.5rem 0;
+        }
+        
+        .screenshot {
+            background: rgba(0, 0, 0, 30%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .screenshot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .screenshot-caption {
+            padding: 1.5rem;
+            color: white;
+            font-weight: 500;
+            font-size: 1.3rem;
+        }
+        
+        .screenshot-description {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--light);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .screenshot-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .screenshot-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 30%);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .screenshot-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        .thank-you {
+            background: rgba(0, 0, 0, 30%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .thank-you:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .animated-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
+        .delay-4 { transition-delay: 0.8s; }
+        
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .slide-body {
+                font-size: 1.1rem;
+            }
+            
+            .team-grid, .features-grid, .specs-grid, .screenshot-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .screenshot img {
+                height: 200px;
+            }
+            
+            .screenshot-caption {
+                font-size: 1.1rem;
+            }
+            
+            .screenshot-description {
+                font-size: 1rem;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Group Members -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <i class="fas fa-users icon-large animated-element"></i>
+                <h2 class="slide-title animated-element delay-1">Group Members</h2>
+                <div class="team-grid">
+                    <div class="team-member animated-element delay-2">
+                        <h3>Reshab Gautam</h3>
+                        <p>23071002864</p>
+                    </div>
+                    <div class="team-member animated-element delay-3">
+                        <h3>Raunak Dubey</h3>
+                        <p>23071002863</p>
+                    </div>
+                    <div class="team-member animated-element delay-2">
+                        <h3>Yash Verma</h3>
+                        <p>23071002902</p>
+                    </div>
+                    <div class="team-member animated-element delay-3">
+                        <h3>Sujal Gupta</h3>
+                        <p>23071002890</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Project Title -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <i class="fas fa-hand-holding-usd icon-large animated-element"></i>
+                <h1 class="slide-title animated-element delay-1">FriendFunds</h1>
+                <h2 class="slide-subtitle animated-element delay-2">Peer-to-Peer Lending Platform</h2>
+                <p class="slide-body animated-element delay-3">A systematic way to manage loans among friends with fixed 8% interest and monthly installments</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Introduction -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Introduction</h2>
+                <div class="features-grid">
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-users fa-2x"></i>
+                        <h3>Friend-to-Friend</h3>
+                        <p>Lending among trusted circles</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-calculator fa-2x"></i>
+                        <h3>Automated System</h3>
+                        <p>Fixed 8% interest calculations</p>
+                    </div>
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                        <h3>Real-time Dashboard</h3>
+                        <p>Live updates and tracking</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-mobile-alt fa-2x"></i>
+                        <h3>Web Platform</h3>
+                        <p>Accessible anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Problem Statement -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Problem Statement</h2>
+                <div class="features-grid">
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-times-circle fa-2x" style="color: #e74c3c;"></i>
+                        <h3>Unstructured Lending</h3>
+                        <p>No formal agreements or terms</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-comment-slash fa-2x" style="color: #e74c3c;"></i>
+                        <h3>Awkward Conversations</h3>
+                        <p>Money talks strain friendships</p>
+                    </div>
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-search-minus fa-2x" style="color: #e74c3c;"></i>
+                        <h3>No Transparency</h3>
+                        <p>Lack of tracking and visibility</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-calculator fa-2x" style="color: #e74c3c;"></i>
+                        <h3>Manual Calculations</h3>
+                        <p>Error-prone interest calculations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Proposed Solution -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Proposed Solution</h2>
+                <div class="features-grid">
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-check-circle fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Structured System</h3>
+                        <p>Fixed terms and schedules</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-eye fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Full Transparency</h3>
+                        <p>Clear tracking and visibility</p>
+                    </div>
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-robot fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Automated Calculations</h3>
+                        <p>Accurate EMI computations</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-handshake fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Trust Building</h3>
+                        <p>Formalized friend lending</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Hardware Specification -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Hardware & Software Specifications</h2>
+                <div class="specs-grid">
+                    <div class="spec-category animated-element delay-1">
+                        <h3>Hardware Requirements</h3>
+                        <ul>
+                            <li>Processor: 1GHz or faster</li>
+                            <li>RAM: 2GB minimum</li>
+                            <li>Storage: 100MB available</li>
+                            <li>Display: 1280x720 resolution</li>
+                        </ul>
+                    </div>
+                    <div class="spec-category animated-element delay-2">
+                        <h3>Software Requirements</h3>
+                        <ul>
+                            <li>OS: Windows 10/11, macOS, Linux</li>
+                            <li>Browser: Chrome 90+, Firefox 85+</li>
+                            <li>Web Standards: HTML5, CSS3, ES6+</li>
+                            <li>Internet Connection</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: ER Diagram -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">ER Diagram</h2>
+                <div class="diagram-container animated-element delay-1">
+                    <div class="diagram">
+                        <h4>Entities & Relationships:</h4>
+                        <p><strong>USERS</strong> (UserID, Username, Email, Password, Balance)</p>
+                        <p><strong>LOANS</strong> (LoanID, BorrowerID, Purpose, Amount, Term, Interest, Status)</p>
+                        <p><strong>INVESTMENTS</strong> (InvestmentID, LoanID, InvestorID, Amount, ExpectedReturn)</p>
+                        <br>
+                        <p><strong>Relationships:</strong></p>
+                        <p>User (1) --- (M) Loans (Borrows)</p>
+                        <p>User (1) --- (M) Investments (Invests)</p>
+                        <p>Loan (1) --- (M) Investments (Gets funded by)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: DFD Level 0 -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Data Flow Diagram - Level 0</h2>
+                <div class="diagram-container animated-element delay-1">
+                    <div class="diagram">
+                        <p><strong>External Entities:</strong> User, Admin</p>
+                        <p><strong>Processes:</strong></p>
+                        <ul>
+                            <li>User Authentication</li>
+                            <li>Loan Management</li>
+                            <li>Investment Processing</li>
+                            <li>Payment Tracking</li>
+                        </ul>
+                        <p><strong>Data Stores:</strong></p>
+                        <ul>
+                            <li>User Database</li>
+                            <li>Loan Repository</li>
+                            <li>Investment Records</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: DFD Level 1 -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">DFD - Level 1</h2>
+                <div class="diagram-container animated-element delay-1">
+                    <div class="diagram">
+                        <p><strong>1.0 AUTHENTICATION</strong></p>
+                        <p>Input: Username/Password → Output: Session Token</p>
+                        <br>
+                        <p><strong>2.0 LOAN PROCESSING</strong></p>
+                        <p>Input: Loan Application → Output: Loan Record</p>
+                        <br>
+                        <p><strong>3.0 INVESTMENT HANDLING</strong></p>
+                        <p>Input: Investment Request → Output: Investment Record</p>
+                        <br>
+                        <p><strong>4.0 PAYMENT MANAGEMENT</strong></p>
+                        <p>Input: Payment Data → Output: Payment History</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: DFD Level 2 -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">DFD - Level 2</h2>
+                <div class="diagram-container animated-element delay-1">
+                    <div class="diagram">
+                        <p><strong>2.1 LOAN CREATION</strong></p>
+                        <p>Validate Input → Calculate EMI → Create Record</p>
+                        <br>
+                        <p><strong>2.2 LOAN FUNDING</strong></p>
+                        <p>Check Balance → Update Funding → Create Investment</p>
+                        <br>
+                        <p><strong>2.3 STATUS UPDATES</strong></p>
+                        <p>Monitor Progress → Update Status → Notify Users</p>
+                        <br>
+                        <p><strong>Data Stores:</strong> User Balances, Loan Details, Investment Records</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Dashboard Screenshot -->
+        <div class="slide screenshot-slide" id="slide11">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Application Screenshots</h2>
+                <div class="screenshot-container">
+                    <div class="screenshot animated-element delay-1">
+                        <img src="Screenshot (2).png" alt="Dashboard">
+                        <div class="screenshot-caption">Main Dashboard</div>
+                        <div class="screenshot-description">
+                            The dashboard provides an overview of all active loans, investments, and account balance with intuitive visualizations.
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-navigation">
+                    <div class="screenshot-dot active" data-slide="11"></div>
+                    <div class="screenshot-dot" data-slide="12"></div>
+                    <div class="screenshot-dot" data-slide="13"></div>
+                    <div class="screenshot-dot" data-slide="14"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Login Screenshot -->
+        <div class="slide screenshot-slide" id="slide12">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Application Screenshots</h2>
+                <div class="screenshot-container">
+                    <div class="screenshot animated-element delay-1">
+                        <img src="Screenshot (3).png" alt="Login">
+                        <div class="screenshot-caption">User Authentication</div>
+                        <div class="screenshot-description">
+                            Secure login and registration system with validation and password recovery options.
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-navigation">
+                    <div class="screenshot-dot" data-slide="11"></div>
+                    <div class="screenshot-dot active" data-slide="12"></div>
+                    <div class="screenshot-dot" data-slide="13"></div>
+                    <div class="screenshot-dot" data-slide="14"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Loan Creation Screenshot -->
+        <div class="slide screenshot-slide" id="slide13">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Application Screenshots</h2>
+                <div class="screenshot-container">
+                    <div class="screenshot animated-element delay-1">
+                        <img src="Screenshot (4).png" alt="Loan Creation">
+                        <div class="screenshot-caption">Loan Request Form</div>
+                        <div class="screenshot-description">
+                            Simple form to create loan requests with amount, purpose, and term selection. EMI calculations are displayed in real-time.
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-navigation">
+                    <div class="screenshot-dot" data-slide="11"></div>
+                    <div class="screenshot-dot" data-slide="12"></div>
+                    <div class="screenshot-dot active" data-slide="13"></div>
+                    <div class="screenshot-dot" data-slide="14"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Investment Screenshot -->
+        <div class="slide screenshot-slide" id="slide14">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Application Screenshots</h2>
+                <div class="screenshot-container">
+                    <div class="screenshot animated-element delay-1">
+                        <img src="Screenshot (6).png" alt="Investment">
+                        <div class="screenshot-caption">Investment Opportunities</div>
+                        <div class="screenshot-description">
+                            Browse available loan requests from friends with detailed information about purpose, amount, and expected returns.
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-navigation">
+                    <div class="screenshot-dot" data-slide="11"></div>
+                    <div class="screenshot-dot" data-slide="12"></div>
+                    <div class="screenshot-dot" data-slide="13"></div>
+                    <div class="screenshot-dot active" data-slide="14"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Future Scope -->
+        <div class="slide" id="slide15">
+            <div class="slide-content">
+                <h2 class="slide-title animated-element">Future Scope</h2>
+                <div class="features-grid">
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-server fa-2x"></i>
+                        <h3>Backend Integration</h3>
+                        <p>Node.js, MongoDB database</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-credit-card fa-2x"></i>
+                        <h3>Payment Gateway</h3>
+                        <p>Real transaction processing</p>
+                    </div>
+                    <div class="feature-item animated-element delay-1">
+                        <i class="fas fa-chart-bar fa-2x"></i>
+                        <h3>Credit Scoring</h3>
+                        <p>Internal trust scoring system</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-dollar-sign fa-2x"></i>
+                        <h3>Multi-currency</h3>
+                        <p>International expansion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Conclusion -->
+        <div class="slide" id="slide16">
+            <div class="slide-content">
+                <i class="fas fa-flag-checkered icon-large animated-element"></i>
+                <h2 class="slide-title animated-element delay-1">Conclusion</h2>
+                <div class="features-grid">
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-check fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Working Platform</h3>
+                        <p>Fully functional P2P lending system</p>
+                    </div>
+                    <div class="feature-item animated-element delay-3">
+                        <i class="fas fa-lightbulb fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Problem Solved</h3>
+                        <p>Addresses real friend-lending issues</p>
+                    </div>
+                    <div class="feature-item animated-element delay-2">
+                        <i class="fas fa-expand fa-2x" style="color: #2ecc71;"></i>
+                        <h3>Scalable Design</h3>
+                        <p>Ready for future enhancements</p>
+                    </div>
+                    <div class="feature-item animated-element delay-3">
+                        <i class="fas fa-users fa-2x" style="color: #2ecc71;"></i>
+                        <h3>User Friendly</h3>
+                        <p>Intuitive interface and experience</p>
+                    </div>
+                </div>
+                <p class="slide-body animated-element delay-4" style="margin-top: 1.5rem;">FriendFunds - Making lending among friends simple, secure, and systematic!</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Thank You -->
+        <div class="slide" id="slide17">
+            <div class="slide-content">
+                <div class="thank-you animated-element">
+                    <i class="fas fa-heart icon-large"></i>
+                    <h1 class="slide-title">Thank You!</h1>
+                    <h2 class="slide-subtitle">Questions & Discussion</h2>
+                    <div class="features-grid">
+                        <div class="feature-item animated-element delay-1">
+                            <i class="fas fa-envelope fa-2x"></i>
+                            <h3>Contact Us</h3>
+                            <p>friendfunds@gmail.com</p>
+                        </div>
+                        <div class="feature-item animated-element delay-2">
+                            <i class="fas fa-globe fa-2x"></i>
+                            <h3>Live Demo</h3>
+                            <p>friendfunds.netlify.app</p>
+                        </div>
+                    </div>
+                    <p class="slide-body animated-element delay-3" style="margin-top: 2rem;">We appreciate your time and attention!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">17</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const progress = document.getElementById('progress');
+            const currentSlideElement = document.getElementById('current-slide');
+            const totalSlidesElement = document.getElementById('total-slides');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const screenshotDots = document.querySelectorAll('.screenshot-dot');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            
+            totalSlidesElement.textContent = totalSlides;
+            
+            // Initialize animation for first slide
+            animateSlideElements();
+            
+            function updateSlide() {
+                // Update slides
+                slides.forEach((slide, index) => {
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                        slide.classList.remove('prev');
+                    } else if (index < currentSlide) {
+                        slide.classList.remove('active');
+                        slide.classList.add('prev');
+                    } else {
+                        slide.classList.remove('active');
+                        slide.classList.remove('prev');
+                    }
+                });
+                
+                // Update progress bar
+                progress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+                
+                // Update slide counter
+                currentSlideElement.textContent = currentSlide + 1;
+                
+                // Update screenshot navigation dots
+                updateScreenshotDots();
+                
+                // Animate elements in current slide
+                animateSlideElements();
+            }
+            
+            function animateSlideElements() {
+                const animatedElements = slides[currentSlide].querySelectorAll('.animated-element');
+                animatedElements.forEach(element => {
+                    element.classList.add('animate-in');
+                });
+            }
+            
+            function updateScreenshotDots() {
+                screenshotDots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (parseInt(dot.getAttribute('data-slide')) === currentSlide + 1) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateSlide();
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateSlide();
+                    }
+                }
+            });
+            
+            // Touch swipe support for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    // Swipe left - next slide
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateSlide();
+                    }
+                } else if (touchEndX > touchStartX + 50) {
+                    // Swipe right - previous slide
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateSlide();
+                    }
+                }
+            }
+            
+            // Screenshot navigation dots
+            screenshotDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const targetSlide = parseInt(this.getAttribute('data-slide')) - 1;
+                    if (targetSlide >= 0 && targetSlide < totalSlides) {
+                        currentSlide = targetSlide;
+                        updateSlide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
