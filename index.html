@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FriendFunds · complete presentation</title>
+    <title>FriendFunds · P2P Lending Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,18 +20,20 @@
             --primary: #3498db;
             --secondary: #2ecc71;
             --accent: #F39C12;
-            --dark: #17222b8f;
+            --dark: #17222b;
+            --darker: #17222b8f;
             --light: #ecf0f1;
             --danger: #e74c3c;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            background: linear-gradient(135deg, var(--dark), #1a2530);
+            background: linear-gradient(135deg, var(--darker), #51657a);
             color: white;
             line-height: 1.6;
             overflow: hidden;
             height: 100vh;
+            position: relative;
         }
 
         .presentation-container {
@@ -48,11 +53,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 3rem;
             opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
             transform: translateX(100%);
-            text-align: center;
+            background: transparent;
         }
 
         .slide.active {
@@ -67,293 +72,269 @@
         }
 
         .slide-content {
-            max-width: 900px;
-            width: 90%;
-            background: rgba(0, 0, 0, 30%);
+            max-width: 1100px;
+            width: 100%;
+            padding: 2.5rem;
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 2.5rem;
+            border: 1px solid rgba(243, 156, 18, 0.2);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 0, 0, 30%);
         }
 
         .slide-title {
             font-size: 2.8rem;
-            margin-bottom: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
             color: var(--accent);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.75rem;
+            display: inline-block;
         }
 
-        .slide-subtitle {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-        }
-
-        .slide-body {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .icon-large {
-            font-size: 4rem;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .progress-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: rgba(0, 0, 0, 30%);
-            z-index: 100;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 2rem;
-            left: 0;
-            width: 100%;
+        .member-list {
             display: flex;
-            justify-content: center;
-            z-index: 100;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-width: 500px;
         }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
+        .member-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            font-size: 1.2rem;
-            z-index: 100;
-        }
-
-        /* --- grids & cards --- */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .team-member {
-            background: rgba(0, 0, 0, 30%);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-item {
-            background: rgba(0, 0, 0, 30%);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-
-        .spec-category {
-            background: rgba(0, 0, 0, 30%);
-            padding: 1.5rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .spec-category:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 0, 0, 30%);
-        }
-
-        .spec-category h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .spec-category ul {
-            margin-left: 1.5rem;
-        }
-
-        .spec-category li {
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        /* --- diagram blocks (DFD/ER) --- */
-        .diagram-container {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            text-align: left;
-            border-left: 4px solid var(--accent);
-        }
-
-        .diagram {
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .diagram h4 {
-            color: var(--accent);
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 1.3rem;
+        }
+
+        .member-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .member-id {
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        .project-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-subtitle {
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--light);
             margin-bottom: 1rem;
         }
 
-        .diagram p, .diagram li {
-            color: var(--light);
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
+        .project-tagline {
+            font-size: 1.3rem;
+            color: #bdc3c7;
+            font-weight: 300;
         }
 
-        .diagram strong {
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(243, 156, 18, 0.15);
+            border-radius: 10px;
+            padding: 1.8rem 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
             color: var(--accent);
         }
 
-        /* --- screenshot slides with actual images --- */
-        .screenshot-slide {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
         }
 
-        .screenshot-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-            margin: 1.5rem 0;
+        .feature-card p {
+            color: #bdc3c7;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .screenshot {
-            background: rgba(0, 0, 0, 30%);
+        .spec-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(243, 156, 18, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .spec-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .spec-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .spec-card ul {
+            list-style: none;
+        }
+
+        .spec-card li {
+            padding: 0.7rem 0;
+            color: var(--light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 1.1rem;
+        }
+
+        .spec-card li:last-child {
+            border-bottom: none;
+        }
+
+        .spec-card li::before {
+            content: "▹";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.8rem;
+        }
+
+        .diagram-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(243, 156, 18, 0.15);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .diagram-box img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            background: rgba(13, 20, 28, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .diagram-caption {
+            margin-top: 1rem;
+            color: var(--light);
+            font-size: 1rem;
+            border-top: 1px solid rgba(243, 156, 18, 0.3);
+            padding-top: 1rem;
+        }
+
+        .screenshot-wrapper {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(243, 156, 18, 0.2);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            width: 100%;
-            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin-top: 1rem;
         }
 
-        .screenshot img {
+        .screenshot-wrapper img {
             width: 100%;
-            height: 350px;
-            object-fit: cover;
-            border-bottom: 3px solid var(--accent);
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
             display: block;
-            background: #2c3e50; /* fallback while image loads */
+            background: #1a2530;
+            padding: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        #slide8 .screenshot-wrapper img,
+        #slide9 .diagram-box img,
+        #slide10 .diagram-box img,
+        #slide11 .diagram-box img {
+            max-height: 450px;
+            width: auto;
+            max-width: 100%;
+            margin: 0 auto;
+            background: #0d151c;
+            padding: 1rem;
         }
 
         .screenshot-caption {
-            padding: 1.5rem;
+            padding: 1rem 1.5rem 0.5rem;
             font-weight: 500;
             font-size: 1.3rem;
         }
 
-        .screenshot-description {
-            padding: 0 1.5rem 1.5rem;
+        .screenshot-caption h4 {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .screenshot-caption p {
             color: var(--light);
             font-size: 1.1rem;
+            padding-bottom: 1rem;
         }
 
-        .screenshot-navigation {
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-
-        .screenshot-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 30%);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .screenshot-dot.active {
-            background: var(--accent);
-            transform: scale(1.2);
-        }
-
-        /* --- FULLY VISIBLE KYC UPLOAD (SLIDE 6) - FIXED CUTOFF ISSUE --- */
-        .kyc-upload {
+        .kyc-form {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             padding: 1.8rem;
-            transition: all 0.3s ease;
-            text-align: left;
-            max-width: 700px;        /* optimal width for full visibility */
+            max-width: 700px;
             width: 100%;
             margin: 0 auto;
-            max-height: 70vh;         /* limit height on very tall screens */
-            overflow-y: auto;          /* scroll only if content overflows */
+            max-height: 70vh;
+            overflow-y: auto;
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .kyc-upload:hover {
+        .kyc-form:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .kyc-upload h3 {
+        .kyc-form h3 {
             color: var(--accent);
             margin-bottom: 1.2rem;
             font-size: 1.5rem;
@@ -361,11 +342,11 @@
             padding-bottom: 0.5rem;
         }
 
-        .upload-group {
+        .upload-section {
             margin-bottom: 1.5rem;
         }
 
-        .upload-group label {
+        .upload-section label {
             display: block;
             color: var(--light);
             margin-bottom: 0.5rem;
@@ -377,7 +358,7 @@
             color: #e74c3c;
         }
 
-        .file-upload {
+        .upload-area {
             background: rgba(255, 255, 255, 0.05);
             border: 2px dashed rgba(255, 255, 255, 0.2);
             border-radius: 10px;
@@ -387,30 +368,30 @@
             transition: all 0.3s ease;
         }
 
-        .file-upload:hover {
+        .upload-area:hover {
             border-color: var(--accent);
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .file-upload i {
+        .upload-area i {
             font-size: 1.8rem;
             color: var(--accent);
             display: block;
             margin-bottom: 0.3rem;
         }
 
-        .file-upload span {
+        .upload-area span {
             display: block;
             font-size: 0.95rem;
             margin-bottom: 0.2rem;
         }
 
-        .file-upload small {
+        .upload-area small {
             font-size: 0.75rem;
             opacity: 0.7;
         }
 
-        .uploaded-file {
+        .file-status {
             margin-top: 0.5rem;
             padding: 0.5rem;
             background: rgba(46, 204, 113, 0.2);
@@ -419,9 +400,10 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
+            color: var(--secondary);
         }
 
-        .signature-status {
+        .signature-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 0.8rem 1rem;
             border-radius: 8px;
@@ -430,7 +412,7 @@
             gap: 0.8rem;
         }
 
-        .signature-status i {
+        .signature-box i {
             color: var(--accent);
             font-size: 1.3rem;
         }
@@ -478,370 +460,646 @@
             color: white;
         }
 
-        .btn-cancel:hover {
+        .btn-outline:hover {
             background: #e74c3c;
         }
 
-        .btn-submit {
+        .btn-primary {
             background: var(--accent);
             color: black;
         }
 
-        .btn-submit:hover {
+        .btn-primary:hover {
             background: #e67e22;
             transform: scale(1.02);
         }
 
-        /* --- thank you --- */
-        .thank-you {
-            background: rgba(0, 0, 0, 30%);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 1rem;
+        .nav-controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
         }
 
-        .thank-you:hover {
+        .nav-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 1.2rem;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: var(--accent);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+        }
+
+        .progress-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .thank-you-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .thank-you-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .animated-element {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .thank-you-box i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .animate-in {
-            opacity: 1;
-            transform: translateY(0);
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2.5rem;
         }
 
-        .delay-1 { transition-delay: 0.2s; }
-        .delay-2 { transition-delay: 0.4s; }
-        .delay-3 { transition-delay: 0.6s; }
-        .delay-4 { transition-delay: 0.8s; }
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dot-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
 
         @media (max-width: 768px) {
             .slide-title { font-size: 2rem; }
-            .slide-subtitle { font-size: 1.5rem; }
-            .slide-body { font-size: 1.1rem; }
-            .team-grid, .features-grid, .specs-grid { grid-template-columns: 1fr; }
-            .screenshot img { height: 200px; }
-            
-            /* Slide 6 responsive on mobile */
-            .kyc-upload {
-                padding: 1.2rem;
-                max-height: 80vh;
-            }
-            .form-actions {
-                flex-direction: column;
+            .project-title { font-size: 2.8rem; }
+            .project-subtitle { font-size: 1.5rem; }
+            .grid-4 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .slide-content { padding: 1.5rem; }
+            .member-item { font-size: 1.1rem; }
+            .screenshot-wrapper img { max-height: 250px; }
+            .diagram-box img { max-height: 250px; }
+            #slide8 .screenshot-wrapper img,
+            #slide9 .diagram-box img,
+            #slide10 .diagram-box img,
+            #slide11 .diagram-box img { max-height: 300px; }
+            .kyc-form { padding: 1.2rem; max-height: 80vh; }
+            .form-actions { flex-direction: column; }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* fix for very large screens */
-        @media (min-width: 1600px) {
-            .slide-content {
-                max-width: 1100px;
-            }
-            .kyc-upload {
-                max-width: 800px;
-                max-height: 65vh;
-            }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 <div class="presentation-container">
 
-    <!-- SLIDE 1 : GROUP MEMBERS (from ffppt) -->
+    <!-- SLIDE 1 : GROUP MEMBERS -->
     <div class="slide active" id="slide1">
         <div class="slide-content">
-            <i class="fas fa-users icon-large animated-element"></i>
-            <h2 class="slide-title animated-element delay-1">Group Members</h2>
-            <div class="team-grid">
-                <div class="team-member animated-element delay-2"><h3>Reshab Gautam</h3><p>23071002864</p></div>
-                <div class="team-member animated-element delay-3"><h3>Raunak Dubey</h3><p>23071002863</p></div>
-                <div class="team-member animated-element delay-2"><h3>Yash Verma</h3><p>23071002902</p></div>
-                <div class="team-member animated-element delay-3"><h3>Sujal Gupta</h3><p>23071002890</p></div>
+            <h2 class="slide-title fade-up">Group Members</h2>
+            <div class="member-list fade-up delay-1">
+                <div class="member-item">
+                    <span class="member-name">Reshab Gautam</span>
+                    <span class="member-id">23071002864</span>
+                </div>
+                <div class="member-item">
+                    <span class="member-name">Raunak Dubey</span>
+                    <span class="member-id">23071002863</span>
+                </div>
+                <div class="member-item">
+                    <span class="member-name">Yash Verma</span>
+                    <span class="member-id">23071002902</span>
+                </div>
+                <div class="member-item">
+                    <span class="member-name">Sujal Gupta</span>
+                    <span class="member-id">23071002890</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 2 : PROJECT TITLE (ffppt) -->
+    <!-- SLIDE 2 : PROJECT TITLE -->
     <div class="slide" id="slide2">
-        <div class="slide-content">
-            <i class="fas fa-hand-holding-usd icon-large animated-element"></i>
-            <h1 class="slide-title animated-element delay-1">FriendFunds</h1>
-            <h2 class="slide-subtitle animated-element delay-2">Peer-to-Peer Lending Platform</h2>
-            <p class="slide-body animated-element delay-3">Fixed 8% interest with monthly installments</p>
+        <div class="slide-content" style="text-align: center;">
+            <h1 class="project-title fade-up">FriendFunds</h1>
+            <h2 class="project-subtitle fade-up delay-1">Peer-to-Peer Lending Platform</h2>
+            <p class="project-tagline fade-up delay-2">Fixed 8% interest with monthly installments</p>
+            <div style="margin-top: 3rem; font-size: 3.5rem;" class="fade-up delay-3">
+                <i class="fas fa-hand-holding-usd" style="color: var(--accent);"></i>
+            </div>
         </div>
     </div>
 
-    <!-- SLIDE 3 : INTRODUCTION (ffppt) -->
+    <!-- SLIDE 3 : INTRODUCTION -->
     <div class="slide" id="slide3">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Introduction</h2>
-            <div class="features-grid">
-                <div class="feature-item animated-element delay-1"><i class="fas fa-users fa-2x"></i><h3>Friend-to-Friend</h3><p>Lending among trusted circles</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-calculator fa-2x"></i><h3>Automated System</h3><p>8% interest calculations</p></div>
-                <div class="feature-item animated-element delay-1"><i class="fas fa-chart-line fa-2x"></i><h3>Real-time Dashboard</h3><p>Live tracking</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-mobile-alt fa-2x"></i><h3>Web Platform</h3><p>Accessible anywhere</p></div>
+            <h2 class="slide-title fade-up">Introduction</h2>
+            <div class="grid-4">
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>Friend-to-Friend</h3>
+                    <p>Lending among trusted circles with formal agreements</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Automated System</h3>
+                    <p>8% interest calculations and EMI scheduling</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Real-time Dashboard</h3>
+                    <p>Live tracking of loans and investments</p>
+                </div>
+                <div class="feature-card fade-up delay-4">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Web Platform</h3>
+                    <p>Accessible anywhere, anytime</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 4 : PROBLEM STATEMENT (ffppt) -->
+    <!-- SLIDE 4 : PROBLEM STATEMENT -->
     <div class="slide" id="slide4">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Problem Statement</h2>
-            <div class="features-grid">
-                <div class="feature-item animated-element delay-1"><i class="fas fa-times-circle fa-2x" style="color:#e74c3c;"></i><h3>Unstructured Lending</h3><p>No formal agreements</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-comment-slash fa-2x" style="color:#e74c3c;"></i><h3>Awkward Conversations</h3><p>Money talks strain friendships</p></div>
-                <div class="feature-item animated-element delay-1"><i class="fas fa-search-minus fa-2x" style="color:#e74c3c;"></i><h3>No Transparency</h3><p>Lack of tracking</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-calculator fa-2x" style="color:#e74c3c;"></i><h3>Manual Calculations</h3><p>Error-prone</p></div>
+            <h2 class="slide-title fade-up">Problem Statement</h2>
+            <div class="grid-4">
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon" style="color: #e74c3c;"><i class="fas fa-times-circle"></i></div>
+                    <h3>Unstructured Lending</h3>
+                    <p>No formal agreements or documentation</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon" style="color: #e74c3c;"><i class="fas fa-comment-slash"></i></div>
+                    <h3>Awkward Conversations</h3>
+                    <p>Money talks strain friendships</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon" style="color: #e74c3c;"><i class="fas fa-search-minus"></i></div>
+                    <h3>No Transparency</h3>
+                    <p>Lack of proper tracking and records</p>
+                </div>
+                <div class="feature-card fade-up delay-4">
+                    <div class="feature-icon" style="color: #e74c3c;"><i class="fas fa-calculator"></i></div>
+                    <h3>Manual Calculations</h3>
+                    <p>Error-prone and time-consuming</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 5 : PROPOSED SOLUTION (ffppt) -->
+    <!-- SLIDE 5 : PROPOSED SOLUTION -->
     <div class="slide" id="slide5">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Proposed Solution</h2>
-            <div class="features-grid">
-                <div class="feature-item animated-element delay-1"><i class="fas fa-check-circle fa-2x" style="color:#2ecc71;"></i><h3>Structured System</h3><p>Fixed terms & schedules</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-eye fa-2x" style="color:#2ecc71;"></i><h3>Full Transparency</h3><p>Clear tracking</p></div>
-                <div class="feature-item animated-element delay-1"><i class="fas fa-robot fa-2x" style="color:#2ecc71;"></i><h3>Automated Calculations</h3><p>Accurate EMI</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-handshake fa-2x" style="color:#2ecc71;"></i><h3>Trust Building</h3><p>Formalized lending</p></div>
+            <h2 class="slide-title fade-up">Proposed Solution</h2>
+            <div class="grid-4">
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-check-circle"></i></div>
+                    <h3>Structured System</h3>
+                    <p>Fixed terms & repayment schedules</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-eye"></i></div>
+                    <h3>Full Transparency</h3>
+                    <p>Clear tracking for all parties</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-robot"></i></div>
+                    <h3>Automated Calculations</h3>
+                    <p>Accurate EMI computation</p>
+                </div>
+                <div class="feature-card fade-up delay-4">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-handshake"></i></div>
+                    <h3>Trust Building</h3>
+                    <p>Formalized lending process</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 6 : LOAN AGREEMENT & KYC - FULLY VISIBLE (NO CUTOFF) -->
+    <!-- SLIDE 6 : LOAN AGREEMENT & KYC -->
     <div class="slide" id="slide6">
         <div class="slide-content" style="padding: 1.8rem;">
-            <h2 class="slide-title animated-element" style="font-size: 2.2rem; margin-bottom: 1rem;">Loan Agreement & KYC</h2>
+            <h2 class="slide-title fade-up" style="font-size: 2.2rem; margin-bottom: 1rem;">Loan Agreement & KYC</h2>
             <div style="display: flex; justify-content: center; width: 100%;">
-                <div class="kyc-upload animated-element delay-1">
+                <div class="kyc-form fade-up delay-1">
                     <h3><i class="fas fa-cloud-upload-alt"></i> Document Upload</h3>
                     
-                    <div class="upload-group"><label>Aadhaar Card <span class="required">*</span></label><div class="file-upload"><i class="fas fa-id-card"></i><span>Click to upload Aadhaar</span><small>PDF, JPG, PNG (Max 5MB)</small></div><div class="uploaded-file"><i class="fas fa-check-circle" style="color: #2ecc71;"></i><span>aadhaar_card.pdf</span></div></div>
+                    <div class="upload-section">
+                        <label>Aadhaar Card <span class="required">*</span></label>
+                        <div class="upload-area">
+                            <i class="fas fa-id-card"></i>
+                            <span>Click to upload Aadhaar</span>
+                            <small>PDF, JPG, PNG (Max 5MB)</small>
+                        </div>
+                        <div class="file-status">
+                            <i class="fas fa-check-circle"></i>
+                            <span>aadhaar_card.pdf</span>
+                        </div>
+                    </div>
 
-                    <div class="upload-group"><label>Signed Undertaking <span class="required">*</span></label><div class="file-upload"><i class="fas fa-file-pdf"></i><span>Click to upload undertaking</span><small>PDF only (Max 5MB)</small></div><div class="uploaded-file"><i class="fas fa-check-circle" style="color: #2ecc71;"></i><span>undertaking_signed.pdf</span></div></div>
+                    <div class="upload-section">
+                        <label>Signed Undertaking <span class="required">*</span></label>
+                        <div class="upload-area">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Click to upload undertaking</span>
+                            <small>PDF only (Max 5MB)</small>
+                        </div>
+                        <div class="file-status">
+                            <i class="fas fa-check-circle"></i>
+                            <span>undertaking_signed.pdf</span>
+                        </div>
+                    </div>
 
-                    <div class="upload-group"><label>Digital Signature</label><div class="signature-status"><i class="fas fa-pen-fancy"></i><span>Provided via consent</span></div></div>
+                    <div class="upload-section">
+                        <label>Digital Signature</label>
+                        <div class="signature-box">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>Provided via consent</span>
+                        </div>
+                    </div>
 
-                    <div class="success-message"><i class="fas fa-check-circle"></i><div><strong>Success!</strong><p>Documents uploaded successfully</p></div></div>
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Success!</strong>
+                            <p>Documents uploaded successfully</p>
+                        </div>
+                    </div>
 
-                    <div class="form-actions"><button class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</button><button class="btn btn-submit"><i class="fas fa-check"></i> Submit</button></div>
+                    <div class="form-actions">
+                        <button class="btn btn-outline"><i class="fas fa-times"></i> Cancel</button>
+                        <button class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 7 : HARDWARE SPECIFICATION (ffppt) -->
+    <!-- SLIDE 7 : HARDWARE & SOFTWARE SPECIFICATION -->
     <div class="slide" id="slide7">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Hardware & Software</h2>
-            <div class="specs-grid">
-                <div class="spec-category animated-element delay-1"><h3>Hardware</h3><ul><li>Processor: 1GHz+</li><li>RAM: 2GB minimum</li><li>Storage: 100MB</li><li>Display: 1280x720</li></ul></div>
-                <div class="spec-category animated-element delay-2"><h3>Software</h3><ul><li>OS: Windows, macOS, Linux</li><li>Browser: Chrome 90+, Firefox 85+</li><li>HTML5, CSS3, ES6+</li><li>Internet Connection</li></ul></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 8 : ER DIAGRAM (ffppt) -->
-    <div class="slide screenshot-slide" id="slide8">
-        <div class="slide-content">
-            <h2 class="slide-title animated-element">ER Diagram</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="er.png" alt="ER Diagram - Database Schema">
-                    <div class="screenshot-caption">Entity Relationship Diagram</div>
-                    <div class="screenshot-description">Database schema showing users, loans, investments, and KYC relationships with all table structures.</div>
+            <h2 class="slide-title fade-up">Hardware & Software</h2>
+            <div class="grid-2">
+                <div class="spec-card fade-up delay-1">
+                    <h3>Hardware Requirements</h3>
+                    <ul>
+                        <li>Processor: 1GHz or faster</li>
+                        <li>RAM: 2GB minimum</li>
+                        <li>Storage: 100MB available space</li>
+                        <li>Display: 1280x720 resolution</li>
+                    </ul>
+                </div>
+                <div class="spec-card fade-up delay-2">
+                    <h3>Software Requirements</h3>
+                    <ul>
+                        <li>OS: Windows, macOS, Linux</li>
+                        <li>Browser: Chrome 90+, Firefox 85+</li>
+                        <li>HTML5, CSS3, JavaScript ES6+</li>
+                        <li>Internet Connection</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 9 : DFD LEVEL 0 (ffppt) -->
+    <!-- SLIDE 8 : ER DIAGRAM -->
+    <div class="slide" id="slide8">
+        <div class="slide-content">
+            <h2 class="slide-title fade-up">ER Diagram</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="er.png" alt="ER Diagram">
+                <div class="screenshot-caption">
+                    <h4>Entity Relationship Diagram</h4>
+                    <p>Database schema showing users, loans, investments, and KYC relationships</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9 : DFD LEVEL 0 -->
     <div class="slide" id="slide9">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">DFD Level 0</h2>
-            <div class="diagram-container animated-element delay-1">
-                <div class="diagram">
-                    <h4>External Entities:</h4><p>User, Admin, Payment Gateway</p>
-                    <h4>Processes:</h4><ul><li>Authentication</li><li>Loan Management</li><li>Investment Processing</li><li>KYC Verification</li></ul>
-                    <h4>Data Stores:</h4><ul><li>User Database</li><li>Loan Repository</li><li>Investment Records</li><li>KYC Documents</li></ul>
+            <h2 class="slide-title fade-up">DFD Level 0</h2>
+            <div class="diagram-box fade-up delay-1">
+                <img src="dfd0.png" alt="DFD Level 0 Diagram">
+                <div class="diagram-caption">
+                    <p>Context Diagram - FriendFunds System Overview</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 10 : DFD LEVEL 1 (ffppt) -->
+    <!-- SLIDE 10 : DFD LEVEL 1 -->
     <div class="slide" id="slide10">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">DFD Level 1</h2>
-            <div class="diagram-container animated-element delay-1">
-                <div class="diagram">
-                    <p><strong>1.0 AUTHENTICATION</strong><br>Input: Username/Password → Output: Session</p>
-                    <p><strong>2.0 LOAN PROCESSING</strong><br>Input: Loan Application → Output: Loan Record</p>
-                    <p><strong>3.0 INVESTMENT</strong><br>Input: Investment → Output: Investment Record</p>
-                    <p><strong>4.0 KYC VERIFICATION</strong><br>Input: Documents → Output: Verification Status</p>
+            <h2 class="slide-title fade-up">DFD Level 1</h2>
+            <div class="diagram-box fade-up delay-1">
+                <img src="dfd1.png" alt="DFD Level 1 Diagram">
+                <div class="diagram-caption">
+                    <p>Detailed process flow showing Authentication, Loan Processing, Investment, and KYC</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 11 : DFD LEVEL 2 (ffppt) -->
+    <!-- SLIDE 11 : DFD LEVEL 2 -->
     <div class="slide" id="slide11">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">DFD Level 2</h2>
-            <div class="diagram-container animated-element delay-1">
-                <div class="diagram">
-                    <p><strong>2.1 LOAN CREATION</strong><br>Validate → Calculate EMI (8%) → Create Record</p>
-                    <p><strong>2.2 LOAN FUNDING</strong><br>Check Balance → Update Funding → Create Investment</p>
-                    <p><strong>2.3 STATUS UPDATES</strong><br>Monitor Progress → Update Status → Notify Users</p>
+            <h2 class="slide-title fade-up">DFD Level 2</h2>
+            <div class="diagram-box fade-up delay-1">
+                <img src="dfd2.png" alt="DFD Level 2 Diagram">
+                <div class="diagram-caption">
+                    <p>Loan Processing breakdown - Creation, Funding, and Status Updates</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 12 : DASHBOARD (actual img tag) -->
-    <div class="slide screenshot-slide" id="slide12">
+    <!-- SLIDE 12 : DASHBOARD SCREENSHOT -->
+    <div class="slide" id="slide12">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Application Screenshots</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (2).png" alt="Dashboard Screenshot">
-                    <div class="screenshot-caption">Main Dashboard</div>
-                    <div class="screenshot-description">The dashboard provides an overview of all active loans, investments, and account balance with intuitive visualizations.</div>
+            <h2 class="slide-title fade-up">Application Screenshots</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (2).png" alt="Dashboard">
+                <div class="screenshot-caption">
+                    <h4>Main Dashboard</h4>
+                    <p>The dashboard provides an overview of all active loans, investments, and account balance</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot" data-slide="13"></div><div class="screenshot-dot" data-slide="14"></div><div class="screenshot-dot" data-slide="15"></div><div class="screenshot-dot" data-slide="16"></div><div class="screenshot-dot" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot active" data-slide="12"></div>
+                <div class="dot" data-slide="13"></div>
+                <div class="dot" data-slide="14"></div>
+                <div class="dot" data-slide="15"></div>
+                <div class="dot" data-slide="16"></div>
+                <div class="dot" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 13 : LOGIN SCREEN (actual img tag) -->
-    <div class="slide screenshot-slide" id="slide13">
+    <!-- SLIDE 13 : LOGIN SCREEN -->
+    <div class="slide" id="slide13">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Authentication</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (3).png" alt="Login Screenshot">
-                    <div class="screenshot-caption">Login Screen</div>
-                    <div class="screenshot-description">Secure login and registration system.</div>
+            <h2 class="slide-title fade-up">Authentication</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (3).png" alt="Login">
+                <div class="screenshot-caption">
+                    <h4>Login Screen</h4>
+                    <p>Secure login and registration system</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot active" data-slide="13"></div><div class="screenshot-dot" data-slide="14"></div><div class="screenshot-dot" data-slide="15"></div><div class="screenshot-dot" data-slide="16"></div><div class="screenshot-dot" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot" data-slide="12"></div>
+                <div class="dot active" data-slide="13"></div>
+                <div class="dot" data-slide="14"></div>
+                <div class="dot" data-slide="15"></div>
+                <div class="dot" data-slide="16"></div>
+                <div class="dot" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 14 : LOAN CREATION (actual img tag) -->
-    <div class="slide screenshot-slide" id="slide14">
+    <!-- SLIDE 14 : LOAN CREATION -->
+    <div class="slide" id="slide14">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Loan Creation</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (4).png" alt="Loan Creation Screenshot">
-                    <div class="screenshot-caption">Loan Request Form</div>
-                    <div class="screenshot-description">Create loan requests with amount, purpose, and term.</div>
+            <h2 class="slide-title fade-up">Loan Creation</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (4).png" alt="Loan Creation">
+                <div class="screenshot-caption">
+                    <h4>Loan Request Form</h4>
+                    <p>Create loan requests with amount, purpose, and term</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot" data-slide="13"></div><div class="screenshot-dot active" data-slide="14"></div><div class="screenshot-dot" data-slide="15"></div><div class="screenshot-dot" data-slide="16"></div><div class="screenshot-dot" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot" data-slide="12"></div>
+                <div class="dot" data-slide="13"></div>
+                <div class="dot active" data-slide="14"></div>
+                <div class="dot" data-slide="15"></div>
+                <div class="dot" data-slide="16"></div>
+                <div class="dot" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 15 : INVESTMENT (actual img tag) -->
-    <div class="slide screenshot-slide" id="slide15">
+    <!-- SLIDE 15 : INVESTMENT -->
+    <div class="slide" id="slide15">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Investment</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (5).png" alt="Investment Screenshot">
-                    <div class="screenshot-caption">Investment Opportunities</div>
-                    <div class="screenshot-description">Browse and invest in loan requests.</div>
+            <h2 class="slide-title fade-up">Investment</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (5).png" alt="Investment">
+                <div class="screenshot-caption">
+                    <h4>Investment Opportunities</h4>
+                    <p>Browse and invest in loan requests</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot" data-slide="13"></div><div class="screenshot-dot" data-slide="14"></div><div class="screenshot-dot active" data-slide="15"></div><div class="screenshot-dot" data-slide="16"></div><div class="screenshot-dot" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot" data-slide="12"></div>
+                <div class="dot" data-slide="13"></div>
+                <div class="dot" data-slide="14"></div>
+                <div class="dot active" data-slide="15"></div>
+                <div class="dot" data-slide="16"></div>
+                <div class="dot" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 16 : KYC SCREENSHOT (using Screenshot (6).png) -->
-    <div class="slide screenshot-slide" id="slide16">
+    <!-- SLIDE 16 : KYC SCREENSHOT -->
+    <div class="slide" id="slide16">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">KYC Verification</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (6).png" alt="KYC Upload Screenshot">
-                    <div class="screenshot-caption">Document Upload</div>
-                    <div class="screenshot-description">Upload Aadhaar and signed undertaking.</div>
+            <h2 class="slide-title fade-up">KYC Verification</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (6).png" alt="KYC">
+                <div class="screenshot-caption">
+                    <h4>Document Upload</h4>
+                    <p>Upload Aadhaar and signed undertaking</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot" data-slide="13"></div><div class="screenshot-dot" data-slide="14"></div><div class="screenshot-dot" data-slide="15"></div><div class="screenshot-dot active" data-slide="16"></div><div class="screenshot-dot" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot" data-slide="12"></div>
+                <div class="dot" data-slide="13"></div>
+                <div class="dot" data-slide="14"></div>
+                <div class="dot" data-slide="15"></div>
+                <div class="dot active" data-slide="16"></div>
+                <div class="dot" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 17 : TERMS & CONDITIONS (using Screenshot (7).png) -->
-    <div class="slide screenshot-slide" id="slide17">
+    <!-- SLIDE 17 : TERMS & CONDITIONS -->
+    <div class="slide" id="slide17">
         <div class="slide-content">
-            <h2 class="slide-title animated-element">Terms & Conditions</h2>
-            <div class="screenshot-container">
-                <div class="screenshot animated-element delay-1">
-                    <img src="Screenshot (7).png" alt="Terms Screenshot">
-                    <div class="screenshot-caption">Terms & Conditions</div>
-                    <div class="screenshot-description">8% interest • Monthly installments • 2% late fee</div>
+            <h2 class="slide-title fade-up">Terms & Conditions</h2>
+            <div class="screenshot-wrapper fade-up delay-1">
+                <img src="Screenshot (7).png" alt="Terms">
+                <div class="screenshot-caption">
+                    <h4>Terms & Conditions</h4>
+                    <p>8% interest • Monthly installments • 2% late fee</p>
                 </div>
             </div>
-            <div class="screenshot-navigation">
-                <div class="screenshot-dot" data-slide="12"></div><div class="screenshot-dot" data-slide="13"></div><div class="screenshot-dot" data-slide="14"></div><div class="screenshot-dot" data-slide="15"></div><div class="screenshot-dot" data-slide="16"></div><div class="screenshot-dot active" data-slide="17"></div>
+            <div class="dot-nav">
+                <div class="dot" data-slide="12"></div>
+                <div class="dot" data-slide="13"></div>
+                <div class="dot" data-slide="14"></div>
+                <div class="dot" data-slide="15"></div>
+                <div class="dot" data-slide="16"></div>
+                <div class="dot active" data-slide="17"></div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 18 : CONCLUSION (ffppt) -->
+    <!-- SLIDE 18 : CONCLUSION -->
     <div class="slide" id="slide18">
         <div class="slide-content">
-            <i class="fas fa-flag-checkered icon-large animated-element"></i>
-            <h2 class="slide-title animated-element delay-1">Conclusion</h2>
-            <div class="features-grid">
-                <div class="feature-item animated-element delay-2"><i class="fas fa-check fa-2x" style="color:#2ecc71;"></i><h3>Working Platform</h3><p>Fully functional</p></div>
-                <div class="feature-item animated-element delay-3"><i class="fas fa-lightbulb fa-2x" style="color:#2ecc71;"></i><h3>Problem Solved</h3><p>Friend lending issues</p></div>
-                <div class="feature-item animated-element delay-2"><i class="fas fa-expand fa-2x" style="color:#2ecc71;"></i><h3>Scalable Design</h3><p>Future ready</p></div>
-                <div class="feature-item animated-element delay-3"><i class="fas fa-users fa-2x" style="color:#2ecc71;"></i><h3>User Friendly</h3><p>Intuitive interface</p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 19 : THANK YOU (ffppt) -->
-    <div class="slide" id="slide19">
-        <div class="slide-content">
-            <div class="thank-you animated-element">
-                <i class="fas fa-heart icon-large"></i>
-                <h1 class="slide-title">Thank You!</h1>
-                <h2 class="slide-subtitle">Questions?</h2>
-                <div class="features-grid">
-                    <div class="feature-item animated-element delay-1"><i class="fas fa-envelope fa-2x"></i><h3>Contact</h3><p>friendfunds@gmail.com</p></div>
-                    <div class="feature-item animated-element delay-2"><i class="fas fa-globe fa-2x"></i><h3>Demo</h3><p>friendfunds.vercel.app</p></div>
+            <h2 class="slide-title fade-up">Conclusion</h2>
+            <div class="grid-4">
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-check"></i></div>
+                    <h3>Working Platform</h3>
+                    <p>Fully functional</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Problem Solved</h3>
+                    <p>Friend lending issues</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-expand"></i></div>
+                    <h3>Scalable Design</h3>
+                    <p>Future ready</p>
+                </div>
+                <div class="feature-card fade-up delay-4">
+                    <div class="feature-icon" style="color: #2ecc71;"><i class="fas fa-users"></i></div>
+                    <h3>User Friendly</h3>
+                    <p>Intuitive interface</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- progress, navigation, counter -->
-    <div class="progress-bar"><div class="progress" id="progress"></div></div>
-    <div class="navigation"><button class="nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button><button class="nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button></div>
-    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">19</span></div>
+    <!-- SLIDE 19 : THANK YOU -->
+    <div class="slide" id="slide19">
+        <div class="slide-content">
+            <div class="thank-you-box fade-up">
+                <i class="fas fa-heart"></i>
+                <h1 class="project-title" style="font-size: 3rem;">Thank You!</h1>
+                <h2 class="project-subtitle" style="font-size: 1.8rem;">Questions?</h2>
+                <div class="contact-info">
+                    <div class="contact-item fade-up delay-1">
+                        <i class="fas fa-envelope"></i>
+                        <h3 style="color: var(--light); margin-bottom: 0.5rem;">Contact</h3>
+                        <p style="color: var(--accent);">friendfunds@gmail.com</p>
+                    </div>
+                    <div class="contact-item fade-up delay-2">
+                        <i class="fas fa-globe"></i>
+                        <h3 style="color: var(--light); margin-bottom: 0.5rem;">Demo</h3>
+                        <p style="color: var(--accent);">friendfunds.vercel.app</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="progress-line"><div class="progress-fill" id="progress"></div></div>
+    <div class="nav-controls">
+        <button class="nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="slide-indicator"><span id="current-slide">1</span> / <span id="total-slides">19</span></div>
 </div>
 
 <script>
@@ -852,7 +1110,7 @@
         const totalSpan = document.getElementById('total-slides');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
-        const screenshotDots = document.querySelectorAll('.screenshot-dot');
+        const dots = document.querySelectorAll('.dot');
 
         let current = 0;
         const total = slides.length;
@@ -871,20 +1129,18 @@
             progress.style.width = `${((current + 1) / total) * 100}%`;
             currentSpan.textContent = current + 1;
 
-            screenshotDots.forEach(dot => {
+            dots.forEach(dot => {
                 dot.classList.remove('active');
                 if (parseInt(dot.getAttribute('data-slide')) === current + 1) {
                     dot.classList.add('active');
                 }
             });
-
-            const animated = slides[current].querySelectorAll('.animated-element');
-            animated.forEach(el => el.classList.add('animate-in'));
         }
 
         nextBtn.addEventListener('click', () => {
             if (current < total - 1) { current++; update(); }
         });
+        
         prevBtn.addEventListener('click', () => {
             if (current > 0) { current--; update(); }
         });
@@ -894,7 +1150,7 @@
             else if (e.key === 'ArrowLeft' && current > 0) { current--; update(); }
         });
 
-        screenshotDots.forEach(dot => {
+        dots.forEach(dot => {
             dot.addEventListener('click', function() {
                 const target = parseInt(this.getAttribute('data-slide')) - 1;
                 if (target >= 0 && target < total) {
