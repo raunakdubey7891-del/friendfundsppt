@@ -651,22 +651,14 @@
     </div>
 
     <!-- SLIDE 8 : ER DIAGRAM (ffppt) -->
-    <div class="slide" id="slide8">
+    <div class="slide screenshot-slide" id="slide8">
         <div class="slide-content">
             <h2 class="slide-title animated-element">ER Diagram</h2>
-            <div class="diagram-container animated-element delay-1">
-                <div class="diagram">
-                    <h4>Entities:</h4>
-                    <p><strong>USERS</strong> (UserID, Username, Email, Password, Balance)</p>
-                    <p><strong>LOANS</strong> (LoanID, BorrowerID, Purpose, Amount, Term, Interest, Status)</p>
-                    <p><strong>INVESTMENTS</strong> (InvestmentID, LoanID, InvestorID, Amount)</p>
-                    <p><strong>KYC</strong> (KYCID, UserID, Document, Status)</p>
-                    <br>
-                    <h4>Relationships:</h4>
-                    <p>User (1) --- (M) Loans</p>
-                    <p>User (1) --- (M) Investments</p>
-                    <p>Loan (1) --- (M) Investments</p>
-                    <p>User (1) --- (1) KYC</p>
+            <div class="screenshot-container">
+                <div class="screenshot animated-element delay-1">
+                    <img src="er.png" alt="ER Diagram - Database Schema">
+                    <div class="screenshot-caption">Entity Relationship Diagram</div>
+                    <div class="screenshot-description">Database schema showing users, loans, investments, and KYC relationships with all table structures.</div>
                 </div>
             </div>
         </div>
